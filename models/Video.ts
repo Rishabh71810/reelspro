@@ -13,6 +13,8 @@ export interface IVideo {
     _id?: mongoose.Types.ObjectId;
     controls?: boolean;
     thumbnail?: string;
+    createdAt?: Date;
+    updatedAt?: Date;
     transformations?:{
         height: number;
         width: number;
@@ -41,6 +43,24 @@ const vidoeSchema = new Schema<IVideo>({
         default: true,
     },
     transformations:{
-        height: {}
+        height: {
+            type: Number,
+            default: VIDEODIMENTIONS.height,
+        },
+        width:{
+            type: Number,
+            default: VIDEODIMENTIONS.width,
+        },
+        quality:{
+            type: Number,
+            default: 100,
+        }
     }
-})
+},{
+    timestamps:true,
+}
+)
+
+const Video = models.Video || model<IVideo>("Video", vidoeSchema);
+
+export default Video;
